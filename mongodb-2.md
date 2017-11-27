@@ -123,7 +123,128 @@ net:
          queryTemplate: <string>
 ```
 
+## setParameter Option
 
+```shell
+setParameter:
+   <parameter1>: <value1>
+   <parameter2>: <value2>
+   
+eg:
+setParameter:
+   enableLocalhostAuthBypass: false
+   ldapUserCacheInvalidationInterval: <int> 默认：30
+```
+
+## storage Options
+
+```shell
+storage:
+   dbPath: <string>    缺省值：Linux和OS X上的/ data / db，Windows上的\ data \ db
+   indexBuildRetry: <boolean>    默认值：True mongod是否在下次启动时重建不完整的索引 不适用于使用内存存储引擎的mongod实例
+   repairPath: <string>    
+   journal: 
+      enabled: <boolean>    Default: true on 64-bit systems, false on 32-bit systems
+      commitIntervalMs: <num> 默认值：100或30 3.2新版功能
+   directoryPerDB: <boolean>    默认：False
+   syncPeriodSecs: <int>    默认：60 不要在生产系统上设置这个值。在几乎所有情况下，您都应该使用默认设置。
+   engine: <string>    在3.2版本更改：从MongoDB 3.2开始，wiredTiger是默认的
+   mmapv1:
+      preallocDataFiles: <boolean>    默认值：True 2.6版后已移除
+      nsSize: <int>    默认：16
+      quota:
+         enforced: <boolean>    默认：false MongoDB每个数据库最多有8个数据文件 使用storage.quota.maxFilesPerDB调整配额 。
+         maxFilesPerDB: <int>    默认：8
+      smallFiles: <boolean>    默认：False
+      journal:
+         debugFlags: <int>    类型：整数 提供测试功能
+         commitIntervalMs: <num>    3.2版本已移除
+   wiredTiger:
+      engineConfig:
+         cacheSizeGB: <number>    类型：float WiredTiger将用于所有数据的内部缓存的最大大小
+         journalCompressor: <string>    默认：snappy 3.0.0新版功能
+         directoryForIndexes: <boolean>    默认：false 3.0.0新版功能
+      collectionConfig:
+         blockCompressor: <string>    默认：snappy 
+      indexConfig:
+         prefixCompression: <boolean>    默认值：true 
+   inMemory:
+      engineConfig:
+         inMemorySizeGB: <number>    默认值：物理RAM的50％少于1 GB 在3.4版本更改：数值可以从256MB到10TB，可以是一个浮点数 仅在MongoDB Enterprise中可用
+```
+
+## operationProfiling Options
+
+```shell
+operationProfiling:
+   slowOpThresholdMs: <int>    默认值：100 数据库分析器认为查询的阈值（以毫秒为单位）变慢。
+   mode: <string>    默认：关闭 数据库分析可能会影响数据库性能 off,slowOp,all
+```
+
+## replication Options
+
+```shell
+replication:
+   oplogSizeMB: <int>    Type: integer 以兆字节为单位 对于64位系统，oplog通常是可用磁盘空间的5％
+   replSetName: <string>    类型：字符串 
+   secondaryIndexPrefetch: <string>    默认：全部 仅在 mmapv1 存储引擎中可用 none,all,_id_only
+   enableMajorityReadConcern: <boolean>    默认：False 3.2新版功能  
+```
+
+## sharding Options
+
+```shell
+sharding:
+   clusterRole: <string>    configsvr 默认启动端口27019 shardsvr 默认启动端口27018
+   archiveMovedChunks: <boolean>    3.2版本更改：从3.2开始，MongoDB 默认使用false 在块迁移期间，分片不保存从分片迁移的文档
+```
+
+## auditLog Options
+
+> 注解
+>
+> Available only in [MongoDB Enterprise](http://www.mongodb.com/products/mongodb-enterprise?jmp=docs)
+
+```shell
+auditLog:
+   destination: <string>    2.6 新版功能
+   format: <string>
+   path: <string>
+   filter: <string>
+```
+
+## snmp Options
+
+```shell
+snmp:
+   subagent: <boolean>
+   master: <boolean>
+```
+
+## mongos-only Options
+
+```shell
+replication:
+   localPingThresholdMs: <int>    Default: 15 以毫秒为单位
+
+sharding:
+   configDB: <string> 从MongoDB 3.2开始，分片集群的配置服务器可以部署为一个副本集。副本集配置服务器必须运行WiredTiger存储引擎。MongoDB 3.2弃用配置服务器的三个镜像 mongod实例。
+   
+sharding：
+  configDB：<configReplSetName> /cfg1.example.net:27017，cfg2.example.net:27017，...
+```
+
+## Windows Service Options
+
+```shell
+processManagement:
+   windowsService:    
+      serviceName: <string>    default: MongoDB
+      displayName: <string>
+      description: <string>
+      serviceUser: <string>
+      servicePassword: <string>
+```
 
 
 
