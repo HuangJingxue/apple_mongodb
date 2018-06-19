@@ -10,7 +10,7 @@ then
 	
 	if /alidata/mongodb/bin/mongod --config /alidata/mongodb/conf/mongodb40000.conf --shutdown &>> $log_file && rsync -auvzP /alidata/mongodb/data40000 /alidata/mongobackup/ &>> $log_file
 	then
-		echo 'success!' >> $log_file
+	    echo 'success!' >> $log_file
 	else
 	    echo 'faild!' >> $log_file
 	fi
