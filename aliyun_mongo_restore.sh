@@ -1,5 +1,3 @@
-[root@iZwz97n253zzwjsmyn9kxaZ mongodbbak]# vim mongo_restore.sh 
-
 #!/bin/bash
 #author:apple
 #对mongos连接CPU性能 network性能 connection性能有影响
