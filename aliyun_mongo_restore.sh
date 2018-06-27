@@ -11,7 +11,7 @@ log_file=$BACK_DIR/restore.log
 
 
 echo `date +%F%H:%M:%S` > $log_file
-$RESTORE -h s-wz971034.mongodb.rds.aliyuncs.com:3717 --authenticationDatabase=admin -u $DB_USER -p $DB_PASS -d scbd --drop --gzip --dir=$BACK_DIR/$DATE/scbd/ &>> $log_file
+$RESTORE -h s-wz971034.mongodb.rds.aliyuncs.com:3717 --authenticationDatabase admin -u $DB_USER -p $DB_PASS -d scbd --drop --gzip --dir=$BACK_DIR/$DATE/scbd/ &>> $log_file
 
 cat > afile << ENDF
 db.runCommand( { enablesharding : "scbd" } )
