@@ -3,6 +3,7 @@
 #对mongos连接CPU性能 network性能 connection性能有影响
 
 RESTORE=/alidata/mongodb/bin/mongorestore
+MONGO=/alidata/mongodb/bin/mongo
 BACK_DIR=/mnt/mongodbbak
 DATE=`date +%F`
 DB_USER=root
@@ -26,6 +27,6 @@ ENDF
 
 while read line
 do
-    echo $line | mongo s-wz971034.mongodb.rds.aliyuncs.com:3717/admin  --authenticationDatabase admin -u $DB_USER  -p $DB_PASS
+    echo $line | $MONGO s-wz971034.mongodb.rds.aliyuncs.com:3717/admin  --authenticationDatabase admin -u $DB_USER  -p $DB_PASS
     #echo $line
 done < afile
