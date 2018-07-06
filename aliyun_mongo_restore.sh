@@ -10,8 +10,20 @@ DB_USER=root
 DB_PASS=aaaaaaaaaaa
 log_file=$BACK_DIR/restore.log
 
-
 echo `date +%F%H:%M:%S` > $log_file
+cat > oplog << ENDF
+db.runCommand({runCommandOnShard: "d-wz92740160bf1894", "command": {compact: 'oplog.rs',force: true}})
+db.runCommand({runCommandOnShard: "d-wz92740160bf1894", "command": {compact: 'oplog.rs',force: true}， $queryOptions: {$readPreference: {mode: 'secondary'}}})
+db.runCommand({runCommandOnShard: "d-wz9917b80841c5b4", "command": {compact: 'oplog.rs',force: true}})
+db.runCommand({runCommandOnShard: "d-wz9917b80841c5b4", "command": {compact: 'oplog.rs',force: true}， $queryOptions: {$readPreference: {mode: 'secondary'}}})
+db.runCommand({runCommandOnShard: "d-wz921b2ab89b7aa4", "command": {compact: 'oplog.rs',force: true}})
+db.runCommand({runCommandOnShard: "d-wz921b2ab89b7aa4", "command": {compact: 'oplog.rs',force: true}， $queryOptions: {$readPreference: {mode: 'secondary'}}})
+ENDF
+while read line
+do
+    echo $line | $MONGO s-wz9cd23adae71034.mongodb.rds.aliyuncs.com:3717/admin  --authenticationDatabase admin -u $DB_USER  -p $DB_PASS &>> $log_file
+done < oplog
+
 $RESTORE -h s-wz971034.mongodb.rds.aliyuncs.com:3717 --authenticationDatabase admin -u $DB_USER -p $DB_PASS -d scbd --drop --gzip --dir=$BACK_DIR/$DATE/scbd/ &>> $log_file
 
 cat > afile << ENDF
